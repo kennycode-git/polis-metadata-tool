@@ -1,4 +1,4 @@
-# 🌍 Polis Analysis - Metadata Extraction Tool
+# Metadata Extraction Tool
 
 Extract comprehensive metadata from social media posts for disinformation research and analysis.
 
