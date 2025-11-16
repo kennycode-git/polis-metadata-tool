@@ -1,0 +1,46 @@
+· GITIGNORE
+Copy
+
+# Environment variables - NEVER COMMIT THESE!
+.env
+.env.local
+.env.production
+
+# API Keys and Secrets
+*.key
+*.pem
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+
+# Debug files
+debug_*.html
+debug_*.json
+facebook_*_data.json
+
+# Test outputs
+*.csv
+*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
