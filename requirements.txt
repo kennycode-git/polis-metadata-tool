@@ -10,9 +10,9 @@ google-auth-httplib2==0.2.0
 praw==7.7.1
 
 # News/Blog Scraping
-newspaper3k==0.2.8
+newspaper3k
 beautifulsoup4==4.12.3
-lxml==5.1.0
+lxml
 
 # HTTP Requests
 requests==2.31.0
