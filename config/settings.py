@@ -18,12 +18,12 @@ except ImportError:
 def get_config(key, default=''):
     """Get config from Streamlit secrets, then env vars, then default"""
     # Priority 1: Streamlit secrets (for cloud deployment)
-    if STREAMLIT_AVAILABLE:
-        try:
-            if key in st.secrets:
-                return st.secrets[key]
-        except:
-            pass
+    try:
+        import streamlit as st  # ✅ Import INSIDE function, not at top
+        if key in st.secrets:
+            return st.secrets[key]
+    except:
+        pass
     
     # Priority 2: Environment variables (for local .env)
     return os.getenv(key, default)
