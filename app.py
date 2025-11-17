@@ -530,7 +530,9 @@ def extract_metadata(url: str, platform: str) -> dict:
                 metadata = result
                 
         elif platform == 'facebook':
-            extractor = FacebookExtractor(url)
+            fb_cookie = st.session_state.get('fb_cookie_string', None)
+            # Pass cookies to extractor
+            extractor = FacebookExtractor(url, cookie_string=fb_cookie)
             result = extractor.extract()
             if isinstance(result, tuple):
                 post_data, op_data = result
