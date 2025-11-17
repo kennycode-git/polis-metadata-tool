@@ -4,39 +4,18 @@ Configuration settings for Polis Analysis Metadata Tool
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file (for local development)
+# Load environment variables
 load_dotenv()
 
-# Try to import Streamlit for cloud deployment
-try:
-    import streamlit as st
-    STREAMLIT_AVAILABLE = True
-except ImportError:
-    STREAMLIT_AVAILABLE = False
-
-# Helper function to get config value from multiple sources
-def get_config(key, default=''):
-    """Get config from Streamlit secrets, then env vars, then default"""
-    # Priority 1: Streamlit secrets (for cloud deployment)
-    try:
-        import streamlit as st  # ✅ Import INSIDE function, not at top
-        if key in st.secrets:
-            return st.secrets[key]
-    except:
-        pass
-    
-    # Priority 2: Environment variables (for local .env)
-    return os.getenv(key, default)
-
-# API Keys
-YOUTUBE_API_KEY = get_config('YOUTUBE_API_KEY', '')
-REDDIT_CLIENT_ID = get_config('REDDIT_CLIENT_ID', '')
-REDDIT_CLIENT_SECRET = get_config('REDDIT_CLIENT_SECRET', '')
-REDDIT_USER_AGENT = get_config('REDDIT_USER_AGENT', 'PolisAnalysis-MetadataBot/1.0')
+# API Keys (Streamlit automatically injects st.secrets into os.environ)
+YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY', '')
+REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID', '')
+REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET', '')
+REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT', 'PolisAnalysis-MetadataBot/1.0')
 
 # Rate Limiting
-RATE_LIMIT_DELAY = int(get_config('RATE_LIMIT_DELAY', '1'))
-MAX_RETRIES = int(get_config('MAX_RETRIES', '4'))
+RATE_LIMIT_DELAY = int(os.getenv('RATE_LIMIT_DELAY', '1'))
+MAX_RETRIES = int(os.getenv('MAX_RETRIES', '4'))
 
 # CSV Output Configuration
 CSV_COLUMNS = [
