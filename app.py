@@ -288,15 +288,26 @@ def apply_theme():
                 background-color: #e0e0e0 !important;
             }
             
-            /* Primary button */
+            /* PRIMARY BUTTON - BLUE WITH WHITE TEXT (SAME AS DARK MODE) */
             button[data-testid="baseButton-primary"] {
                 background-color: #0068c9 !important;
                 color: #ffffff !important;
+                border: none !important;
             }
             button[data-testid="baseButton-primary"] * {
                 color: #ffffff !important;
             }
-            
+            button[data-testid="baseButton-primary"]:hover {
+                background-color: #0054a3 !important;
+                color: #ffffff !important;
+            }
+            button[data-testid="baseButton-primary"]:focus,
+            button[data-testid="baseButton-primary"]:active {
+                background-color: #0068c9 !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+                        
             /* Secondary buttons */
             .stButton button:not([kind="primary"]) {
                 background-color: #ffffff !important;
