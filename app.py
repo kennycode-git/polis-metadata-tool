@@ -516,7 +516,7 @@ def check_api_configuration():
     if st.session_state.get('test_mode_show_api_config', False):
         missing_keys = ["YouTube", "Reddit"]  # Simulate all missing
     
-    if missing_keys:
+    if missing_keys and st.session_state.get('test_mode_show_api_config', False):
         # Main area - collapsible info about missing keys
         test_mode_label = " (TEST MODE - Preview)" if st.session_state.get('test_mode_show_api_config', False) else ""
         with st.expander(f"ℹ️ API Configuration Required - Click to expand{test_mode_label}", expanded=False):
