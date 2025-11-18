@@ -21,8 +21,8 @@ def log(*args):
 def scrape_tiktok(url):
     """Scrape TikTok video metadata - returns RAW format"""
     
-    # Resolve mobile URLs to desktop version
-    if 'm.tiktok.com' in url:
+    # Resolve mobile URLs to desktop version (but not short URLs)
+    if 'm.tiktok.com' in url and not ('vm.tiktok.com' in url or 'vt.tiktok.com' in url):
         url = url.replace('m.tiktok.com', 'www.tiktok.com')
         log(f"[POST] Converted mobile URL to desktop: {url}")
 
