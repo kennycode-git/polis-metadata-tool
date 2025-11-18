@@ -31,14 +31,24 @@ st.set_page_config(
 
 # Custom CSS for better styling with theme support
 def apply_theme():
+    # Initialize theme to LIGHT mode by default
+    if 'theme' not in st.session_state:
+        st.session_state.theme = 'dark'  # ✅ DEFAULT TO LIGHT
+        
     if st.session_state.theme == 'dark':
         theme_css = """
         <style>
             /* Dark mode - full page styling */
             .stApp {
-                background-color: #1a1a1a;
-                color: #ffffff;
+                background-color: #0e1117 !important;
+                color: #ffffff !important;
             }
+            
+            /* TOP HEADER BAR - MATCH PAGE BACKGROUND (black) */
+            header[data-testid="stHeader"] {
+                background-color: #0e1117 !important;
+            }
+            
             .main-header {
                 font-size: 2.5rem;
                 font-weight: bold;
@@ -51,67 +61,59 @@ def apply_theme():
                 margin-bottom: 2rem;
             }
             .additional-section {
-                background-color: #1a1a1a;
+                background-color: #0e1117;
                 padding: 0.75rem;
                 border-radius: 0.5rem;
                 border: 1px dashed #333333;
                 margin-top: 6rem;
             }
-            .stButton button:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
+            
             /* Dark mode text colors */
             .stMarkdown, p, span, label {
-                color: #e0e0e0;
+                color: #e0e0e0 !important;
             }
             h1, h2, h3, h4, h5, h6 {
-                color: #ffffff;
+                color: #ffffff !important;
             }
+            
             /* Input fields dark mode */
             .stTextInput input {
-                background-color: #2d3748;
-                color: #ffffff;
-                border-color: #4a5568;
+                background-color: #262730 !important;
+                color: #ffffff !important;
+                border-color: #4a5568 !important;
             }
-            /* Text area dark mode (for Facebook cookies) */
+            
+            /* Text area dark mode */
             .stTextArea textarea {
-                background-color: #2d3748 !important;
+                background-color: #262730 !important;
                 color: #ffffff !important;
                 border-color: #4a5568 !important;
             }
             .stTextArea label {
                 color: #e0e0e0 !important;
             }
-            .stTextArea textarea::placeholder {
-                color: #9ca3af !important;
-                opacity: 0.7;
-            }
+            
             /* Expander dark mode */
             .streamlit-expanderHeader {
-                background-color: #2d3748;
-                color: #ffffff;
+                background-color: #262730 !important;
+                color: #ffffff !important;
             }
-                        /* Expander dark mode */
-            .streamlit-expanderHeader {
-                background-color: #2d3748;
-                color: #ffffff;
-            }
-            /* Expander content background */
             .streamlit-expanderContent {
-                background-color: #1a1a1a !important;
+                background-color: #0e1117 !important;
             }
-            /* Code blocks in expanders (dark mode) */
+            
+            /* CODE BLOCKS IN SIDEBAR - VISIBLE */
             section[data-testid="stSidebar"] code {
-                background-color: #1a1a1a !important;
+                background-color: #262730 !important;
                 color: #4ade80 !important;
                 padding: 2px 6px;
                 border-radius: 3px;
                 font-family: monospace;
             }
+            
             /* Markdown in sidebar expanders */
             section[data-testid="stSidebar"] .streamlit-expanderContent {
-                background-color: #1a1a1a !important;
+                background-color: #0e1117 !important;
             }
             section[data-testid="stSidebar"] .streamlit-expanderContent p {
                 color: #e0e0e0 !important;
@@ -122,20 +124,32 @@ def apply_theme():
             section[data-testid="stSidebar"] .streamlit-expanderContent ul {
                 color: #e0e0e0 !important;
             }
-            /* Top header bar (with 3 dots menu) - grey with white text */
-            header[data-testid="stHeader"] {
-                background-color: #3a3a3a !important;
+            section[data-testid="stSidebar"] .streamlit-expanderContent li {
+                color: #e0e0e0 !important;
             }
-            /* Sidebar styling - grey with white text */
+            
+            /* Sidebar styling - dark grey */
             section[data-testid="stSidebar"] {
-                background-color: #2d2d2d !important;
+                background-color: #262730 !important;
             }
             section[data-testid="stSidebar"] * {
                 color: #ffffff !important;
             }
-            /* Dark mode buttons - secondary buttons only (NOT the primary Extract button) */
+            
+            /* PRIMARY BUTTON - BLUE WITH WHITE TEXT */
+            .stButton button[kind="primary"] {
+                background-color: #0068c9 !important;
+                color: #ffffff !important;
+                border: none !important;
+                font-weight: 500 !important;
+            }
+            .stButton button[kind="primary"]:hover {
+                background-color: #0054a3 !important;
+            }
+            
+            /* Dark mode secondary buttons */
             .stButton button:not([kind="primary"]) {
-                background-color: #2d2d2d !important;
+                background-color: #262730 !important;
                 color: #ffffff !important;
                 border: 1px solid #444444 !important;
             }
@@ -144,7 +158,7 @@ def apply_theme():
                 border-color: #555555 !important;
             }
             .stDownloadButton button {
-                background-color: #2d2d2d !important;
+                background-color: #262730 !important;
                 color: #ffffff !important;
                 border: 1px solid #444444 !important;
             }
@@ -152,70 +166,241 @@ def apply_theme():
                 background-color: #404040 !important;
                 border-color: #555555 !important;
             }
-            /* Top app bar - three dot menu button and dropdown */
-            [data-testid="stToolbar"] button {
-                background-color: #e0e0e0 !important;
-                color: #000000 !important;
-            }
-            [data-testid="stToolbar"] button:hover {
-                background-color: #d0d0d0 !important;
-            }
-            /* Menu dropdown text color */
-            [data-testid="stToolbar"] [role="menu"] {
-                background-color: #ffffff !important;
-            }
-            [data-testid="stToolbar"] [role="menuitem"] {
-                color: #000000 !important;
-            }
-            /* Hide only the Streamlit secrets error/exception banners, not success messages */
-            .stException {
-                display: none !important;
-            }
-            div[data-testid="stException"] {
-                display: none !important;
-            }
         </style>
         """
+
     else:
+        # LIGHT MODE
         theme_css = """
         <style>
-            /* Light mode - default styling */
             .stApp {
-                background-color: #ffffff;
-                color: #000000;
+                background-color: #ffffff !important;
+                color: #000000 !important;
             }
+            
+            header[data-testid="stHeader"] {
+                background-color: #ffffff !important;
+            }
+            
             .main-header {
                 font-size: 2.5rem;
                 font-weight: bold;
-                color: #1f77b4;
+                color: #1f77b4 !important;
                 margin-bottom: 0.5rem;
             }
             .sub-header {
                 font-size: 1.1rem;
-                color: #666;
+                color: #666666 !important;
                 margin-bottom: 2rem;
             }
-            .additional-section {
-                background-color: #f8f9fa;
-                padding: 0.75rem;
-                border-radius: 0.5rem;
-                border: 1px dashed #dee2e6;
-                margin-top: 6rem;
+            
+            /* Light mode text */
+            .stMarkdown, p, span, label {
+                color: #000000 !important;
             }
+            h1, h2, h3, h4, h5, h6 {
+                color: #000000 !important;
+            }
+            
+            /* Regular code blocks - dark text */
+            code {
+                background-color: #f0f0f0 !important;
+                color: #333333 !important;
+                padding: 2px 6px;
+                border-radius: 3px;
+            }
+            
+            /* CSV preview code - white text on dark background */
+            [data-testid="stCodeBlock"] {
+                color: #ffffff !important;
+                background-color: #1e1e1e !important;
+            }
+            [data-testid="stCodeBlock"] code {
+                color: #ffffff !important;
+                background-color: #1e1e1e !important;
+            }
+            [data-testid="stCodeBlock"] pre {
+                color: #ffffff !important;
+                background-color: #1e1e1e !important;
+            }
+            
+            /* Input fields */
+            .stTextInput input {
+                background-color: #f7f7f7 !important;
+                color: #000000 !important;
+                border: none !important;
+            }
+            .stTextInput input::placeholder {
+                color: #999999 !important;
+            }
+            
+            /* Text area */
+            .stTextArea textarea {
+                background-color: #f7f7f7 !important;
+                color: #000000 !important;
+                border: none !important;
+            }
+            
+            /* Expander */
+            .streamlit-expanderHeader {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #e0e0e0 !important;
+                border-radius: 4px !important;
+            }
+            .streamlit-expanderContent {
+                background-color: #ffffff !important;
+                border: 1px solid #e0e0e0 !important;
+                border-top: none !important;
+            }
+            
+            /* Sidebar */
+            section[data-testid="stSidebar"] {
+                background-color: #f5f5f5 !important;
+            }
+            section[data-testid="stSidebar"] * {
+                color: #000000 !important;
+            }
+            /* Target the hamburger icon/arrow itself */
+            [data-testid="stSidebarNav"] span {
+                color: #000000; /* Change this to your desired color (e.g., a specific hex code) */
+            }
+            
+            /* Left arrow button - more visible */
+            button[data-testid="collapsedControl"] {
+                background-color: #ffffff !important;
+                border: 2px solid #0068c9 !important;
+                color: #0068c9 !important;
+            }
+            button[data-testid="collapsedControl"]:hover {
+                background-color: #f0f0f0 !important;
+            }
+            
+            /* Settings menu - light grey background */
+            [data-testid="stToolbar"] [role="menu"] {
+                background-color: #f5f5f5 !important;
+            }
+            [data-testid="stToolbar"] [role="menuitem"] {
+                color: #000000 !important;
+                background-color: #f5f5f5 !important;
+            }
+            [data-testid="stToolbar"] [role="menuitem"]:hover {
+                background-color: #e0e0e0 !important;
+            }
+            
+            /* Primary button */
+            button[data-testid="baseButton-primary"] {
+                background-color: #0068c9 !important;
+                color: #ffffff !important;
+            }
+            button[data-testid="baseButton-primary"] * {
+                color: #ffffff !important;
+            }
+            
+            /* Secondary buttons */
+            .stButton button:not([kind="primary"]) {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #d0d0d0 !important;
+            }
+            .stDownloadButton button {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #d0d0d0 !important;
+            }
+            /* Settings dropdown menu - light grey background */
+            [data-baseweb="popover"] > div {
+                background-color: #f5f5f5 !important;
+            }
+            [data-baseweb="popover"] ul {
+                background-color: #f5f5f5 !important;
+            }
+            [data-baseweb="popover"] li {
+                background-color: #f5f5f5 !important;
+                color: #000000 !important;
+            }
+            [data-baseweb="popover"] li:hover {
+            background-color: #e0e0e0 !important;
+            }
+            /* Menu text items */
+            [data-baseweb="popover"] [role="menuitem"] * {
+                color: #000000 !important;
+            }
+            /* Disabled buttons - more obviously greyed out */
             .stButton button:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
+                opacity: 0.4 !important;
+                cursor: not-allowed !important;
+                background-color: #e0e0e0 !important;
+                color: #999999 !important;
+                border: 1px solid #d0d0d0 !important;
             }
-            /* Hide only the Streamlit secrets error/exception banners, not success messages */
-            .stException {
+            /* Tooltips - black text on white background */
+            [data-baseweb="tooltip"] {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #cccccc !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+            }
+            [data-baseweb="tooltip"] * {
+                color: #000000 !important;
+            }
+            /* Tooltip arrow */
+            [data-baseweb="tooltip"] [data-popper-arrow] {
                 display: none !important;
             }
-            div[data-testid="stException"] {
-                display: none !important;
+            /* TOOLTIPS - WHITE BACKGROUND, BLACK TEXT (STRONGER) */
+            div[role="tooltip"] {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #000000 !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+            }
+            div[role="tooltip"] * {
+                color: #000000 !important;
+            }
+            [data-baseweb="tooltip"] {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #000000 !important;
+            }
+            
+            /* Remove red outline from primary button */
+            button[data-testid="baseButton-primary"]:focus,
+            button[data-testid="baseButton-primary"]:focus-visible {
+                outline: none !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            
+            /* Regular inline code - dark text on light grey */
+            code:not([class*="language"]) {
+                background-color: #f0f0f0 !important;
+                color: #333333 !important;
+                padding: 2px 6px;
+                border-radius: 3px;
+            }
+            
+            /* CSV PREVIEW BOXES - WHITE TEXT ON DARK BACKGROUND */
+            [data-testid="stCodeBlock"] {
+                background-color: #1e1e1e !important;
+                border: 1px solid #000000 !important;
+            }
+            [data-testid="stCodeBlock"] code,
+            [data-testid="stCodeBlock"] pre,
+            [data-testid="stCodeBlock"] * {
+                color: #ffffff !important;
+                background-color: #1e1e1e !important;
+            }
+            /* Prevent CSV text from turning black on hover */
+            [data-testid="stCodeBlock"]:hover code,
+            [data-testid="stCodeBlock"]:hover pre,
+            [data-testid="stCodeBlock"]:hover * {
+                color: #ffffff !important;
             }
         </style>
         """
     st.markdown(theme_css, unsafe_allow_html=True)
+
 
 
 def main():
