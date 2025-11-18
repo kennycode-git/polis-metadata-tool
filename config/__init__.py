@@ -1,2 +1,5 @@
 """Config package for Polis Analysis Metadata Tool"""
-from .settings import *
+
+from . import settings
+
+__all__ = ['settings']
