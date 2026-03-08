@@ -2,6 +2,10 @@
 
 Extract comprehensive metadata from social media posts for disinformation research and analysis.
 
+## Demo
+
+![Demo](docs/demo.gif)
+
 ## Features
 
 - **Multi-Platform Support:** Facebook, YouTube, TikTok, Reddit, News articles
