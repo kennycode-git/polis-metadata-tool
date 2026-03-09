@@ -10,6 +10,8 @@ Extract comprehensive metadata from social media posts for disinformation resear
 
 Example metadata extracted from a social media post (in the structure of client's database):
 
+![Output](docs/output-example.png)
+
 ID,title,caption,hashtags,type,date,extracted_date,platform,views,likes,shares,comments,saves,reposts,engagement_rate,url,language,extraction_status,extraction_timestamp
 po_vbhfhijw9ryrcx,,"Turn a #WhatsApp message into a video. 📱🎬 We connected the #Copilot #SDK to #Remotion to build a tool that generates a high-quality promo video in 5 minutes—triggered right from your phone. All thanks to pluggable, portable #code.","#WhatsApp, #Copilot, #SDK, #Remotion, #code",video,2026-03-08T18:35:02,2026-03-09T15:57:03.990842,tiktok,522,19,0,0,3,,3.64,https://www.tiktok.com/@github/video/7614955164755053856,en,success,2026-03-09T15:57:07.677187
 
